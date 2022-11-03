@@ -5,39 +5,67 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
+// Seleciona a raíz do HTML
+:root {
+    --card-color-primary: #F7DD43;
+    --card-border-color: #746615;
+    --card-text-color: #E1E1E6;
+    --card-title-color: #F7DD43;
+    --card-bg: #1D1C19;
+    --bg: url('./assets/images/bg-yellow.svg');
+
+}
 
 body {
-    background-color: #121214;
-    background-image: url(./assets/images/bg.svg);
-    background-position-x: center;
-    background-position-y: 55.6%;
+    /*             color   image      repeat  position-xy / size*/
+    background: #121214 var(--bg) no-repeat top center/cover;
+}
+
+body.blue {
+    --card-color-primary: #338AF3;
+    --card-border-color: #338AF3;
+    --card-bg: #202024;
+    --bg: url('./assets/images/bg-blue.svg');
+}
+
+body.green {
+    --card-color-primary: #047C3F;
+    --card-border-color: #047C3F;
+    --card-bg: #1A1F1B;
+    --bg: url('./assets/images/bg-green.svg');
 }
 
 #app {
     // Encaixe o conteúdo dentro da caixa;
     width: fit-content;
-    margin: 52px auto;
+    margin: auto;
+    padding-top: 52px;
 }
 
 header {
     margin-bottom: 63px;
+    text-align: center;
 }
 
 #cards {
-
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .card {
     padding: 32px 23px;
     text-align: center;
-    background: #1D1C19;
-    border-bottom: 2px solid #F7DD43;
+    background: var(--card-bg);
+    border-bottom: 2px solid var(--card-color-primary);
     border-radius: 6px;
+    // nome da animation | tempo / forwards ele manterá os valores do 100% na animation
+    animation: appear 3s forwards;
 }
 
 .card-title {
     padding: 8px 16px;
-    border: 1px solid #746615;
+    border: 1px solid var(--card-border-color);
     border-radius: 6px;
 
     display: flex;
@@ -45,13 +73,18 @@ header {
     justify-content: center;
     align-items: center;
     
-    color: #F7DD43;
+    color: var(--card-title-color);
     width: fit-content;
     margin-inline: auto;
     margin-bottom: 53px;
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 
     span {
-        color: #E1E1E6;
+        color: var(--card-text-color);
         text-transform: uppercase;
         font-size: 14px;
     }
@@ -64,26 +97,85 @@ header {
     justify-content: space-between;
 
     .card-flag {
+        transition: transform 0.3s;
 
+        &:hover {
+            transform: scale(1.1);
+        }
     }
+    
 
     .game-hour {
         font-weight: 900;
         font-size: 36px;
         line-height: 125%;
         color: #E1E1E6;
+        transition: transform 0.3s;
 
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 }
 
 .card-list {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    width: 270px;
+    gap: 16px;
+    width: 300px;
 }
 
-.card-game + .card-game {
+.score-game + .stage {
     padding-top: 24px;
     border-top: 1px solid #323238;
+}
+
+.score-game  {
+
+    .score-game-list {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .score-item {
+            font-size: 24px;
+            color: var(--card-text-color);
+            font-weight: 900;
+        
+        }
+    }
+}
+
+.stage {
+    .stage-name {
+        color: var(--card-text-color);
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+        text-align: center;
+    }
+}
+
+// At Rule
+@keyframes appear {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        // Ele automaticamente entende que no 100% o translateY vem para o valor 0
+        opacity: 1;
+    }
+}
+
+@media (min-width: 700px){
+    #cards {
+        max-width: 724px;
+        flex-direction: row;
+        flex-wrap: wrap; // O que transbordar, jogue para a linha de baixo
+    }
+
+    
 }
